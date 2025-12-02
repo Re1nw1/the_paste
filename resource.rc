@@ -1,0 +1,61 @@
+#include "resource.h"
+#include <windows.h>
+
+// 应用图标（确保同目录有 app.ico）
+IDI_APPICON ICON "app.ico"
+
+// comctl v6 manifest，统一 Windows 视觉效果
+1 RT_MANIFEST
+BEGIN
+    "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+    "<assembly xmlns=\"urn:schemas-microsoft-com:asm.v1\" manifestVersion=\"1.0\">"
+    "  <assemblyIdentity version=\"1.0.0.0\" processorArchitecture=\"*\" name=\"AutoInputTool\" type=\"win32\"/>"
+    "  <dependency>"
+    "    <dependentAssembly>"
+    "      <assemblyIdentity type=\"win32\" name=\"Microsoft.Windows.Common-Controls\" version=\"6.0.0.0\" processorArchitecture=\"*\" publicKeyToken=\"6595b64144ccf1df\" language=\"*\"/>"
+    "    </dependentAssembly>"
+    "  </dependency>"
+    "</assembly>"
+END
+
+// 紧凑布局：顶部左右两个复选框；输入框高度小；保存按钮在最右下角
+IDD_MAIN DIALOGEX 0, 0, 246, 200
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+CAPTION "自动输入程序"
+FONT 9, "Microsoft YaHei"
+BEGIN
+    // 顶部左右两个复选框
+    CONTROL     "启用自动输入", IDC_CHK_ENABLE,  "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 10, 60, 12
+    CONTROL     "开机启动",     IDC_CHK_STARTUP, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 100, 10, 60, 12
+
+    // 输入框紧凑化（高度 12）
+    LTEXT       "Alt+1", IDC_STATIC_ALT1, 10, 30, 30, 10
+    EDITTEXT    IDC_EDIT_ALT1, 45, 28, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    LTEXT       "Alt+2", IDC_STATIC_ALT2, 10, 46, 30, 10
+    EDITTEXT    IDC_EDIT_ALT2, 45, 44, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    LTEXT       "Alt+3", IDC_STATIC_ALT3, 10, 62, 30, 10
+    EDITTEXT    IDC_EDIT_ALT3, 45, 60, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    LTEXT       "Alt+4", IDC_STATIC_ALT4, 10, 78, 30, 10
+    EDITTEXT    IDC_EDIT_ALT4, 45, 76, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    LTEXT       "Alt+5", IDC_STATIC_ALT5, 10, 94, 30, 10
+    EDITTEXT    IDC_EDIT_ALT5, 45, 92, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    LTEXT       "Alt+6", IDC_STATIC_ALT6, 10, 110, 30, 10
+    EDITTEXT    IDC_EDIT_ALT6, 45, 108, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    LTEXT       "Alt+7", IDC_STATIC_ALT7, 10, 126, 30, 10
+    EDITTEXT    IDC_EDIT_ALT7, 45, 124, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    LTEXT       "Alt+8", IDC_STATIC_ALT8, 10, 142, 30, 10
+    EDITTEXT    IDC_EDIT_ALT8, 45, 140, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    LTEXT       "Alt+9", IDC_STATIC_ALT9, 10, 158, 30, 10
+    EDITTEXT    IDC_EDIT_ALT9, 45, 156, 180, 12, ES_AUTOHSCROLL | WS_TABSTOP
+
+    // 保存按钮在最右下角
+    DEFPUSHBUTTON "保存", IDC_BTN_SAVE, 165, 176, 60, 15, WS_TABSTOP
+END
