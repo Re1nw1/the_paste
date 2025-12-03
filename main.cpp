@@ -341,6 +341,7 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 
         RegisterHotkeys(hDlg);
         AddTrayIcon(hDlg);
+		ShowWindow(hDlg, SW_HIDE);
         return TRUE;
     }
     case WM_COMMAND: {
@@ -412,16 +413,23 @@ INT_PTR CALLBACK MainDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int)
 {
-    // 单实例
-    if (!EnsureSingleInstance()) {
-        return 0;
-    }
-    // 管理员权限检查与提升
-    if (!RelaunchAsAdminIfNeeded()) {
-        // 已重启为管理员，当前进程退出
-        return 0;
-    }
+    if (!EnsureSingleInstance()) return 0;
+    if (!RelaunchAsAdminIfNeeded()) return 0;
 
-    DialogBoxParamW(hInstance, MAKEINTRESOURCE(IDD_MAIN), nullptr, MainDlgProc, 0);
-    return 0;
+    g_hInst = hInstance;
+
+    HWND hDlg = CreateDialogParamW(hInstance, MAKEINTRESOURCE(IDD_MAIN), nullptr, MainDlgProc, 0);
+    if (!hDlg) return 0;
+
+    // 启动后立即隐藏窗口
+    ShowWindow(hDlg, SW_HIDE);
+
+    MSG msg;
+    while (GetMessageW(&msg, nullptr, 0, 0)) {
+        if (!IsDialogMessageW(hDlg, &msg)) {
+            TranslateMessage(&msg);
+            DispatchMessageW(&msg);
+        }
+    }
+    return (int)msg.wParam;
 }
